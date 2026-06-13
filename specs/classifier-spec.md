@@ -176,6 +176,16 @@ What string operations or parsing logic do you need?
 This depends on the output format you chose in build_few_shot_prompt.]
 ```
 
+First, I'll normalize the label after splitting, I'll call .strip().lower() on the first line.
+
+To extract the label, I'll use a string operation line.replace("Label:", "").strip().
+
+For the reasoning, I'll get everything after the first line: "\n".join(lines[1:]).strip().
+
+When it comes to error handling, if I can't find both parts (label and reasoning), I'll set label to "unknown" and put the raw response in reasoning for debugging.
+
+
+
 ---
 
 **Step 4 — Validate the label:**
@@ -184,6 +194,8 @@ This depends on the output format you chose in build_few_shot_prompt.]
 [blank — what do you do if the LLM returns a label that isn't in VALID_LABELS?
 What should label be set to?]
 ```
+
+After parsing, check if label is in VALID_LABELS. If not, set label = "unknown".
 
 ---
 
@@ -194,6 +206,10 @@ What should label be set to?]
 What should the function return if something fails?
 Hint: the evaluation loop runs 20 calls — one bad response shouldn't crash everything.]
 ```
+
+Using a try/except block, we can handle both API exceptions and parsing errors (e.g., IndexError, AttributeError). 
+
+On any failure, return {"label": "unknown", "reasoning": "Classification failed: <error message>"}. This keeps the evaluation loop running even if individual calls fail.
 
 ---
 
