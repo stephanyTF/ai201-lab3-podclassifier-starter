@@ -91,10 +91,6 @@ the format below:" followed by the output format you chose.
 **What output format should you request from the LLM?**
 
 ```
-[blank — you need to parse the response in classify_episode(). What format
-makes parsing reliable? Think about: a single label on its own line?
-A structured format like "Label: X / Reasoning: Y"? JSON?
-What are the tradeoffs?]
 
 Label: X\nReasoning: Y (two separate lines, not slash-separated) hits the sweet spot. 
 
@@ -110,8 +106,6 @@ Reasoning: The label is on a predictable key, parsing is split("\n") + strip, an
 **Edge cases to handle in the prompt:**
 
 ```
-[blank — what if labeled_examples is empty? What if the description is very
-short? How does your prompt handle these?]
 
 - If the labeled_examples is empty, return {"label": "unknown", "reasoning": "No labeled examples provided."}
 - If the description is short, classify based on what is available."
@@ -171,11 +165,6 @@ Extract the response text from:
 **Step 3 — Parse the response:**
 
 ```
-[blank — how do you extract the label and reasoning from the LLM's text output?
-What string operations or parsing logic do you need?
-This depends on the output format you chose in build_few_shot_prompt.]
-```
-
 First, I'll normalize the label after splitting, I'll call .strip().lower() on the first line.
 
 To extract the label, I'll use a string operation line.replace("Label:", "").strip().
@@ -183,6 +172,10 @@ To extract the label, I'll use a string operation line.replace("Label:", "").str
 For the reasoning, I'll get everything after the first line: "\n".join(lines[1:]).strip().
 
 When it comes to error handling, if I can't find both parts (label and reasoning), I'll set label to "unknown" and put the raw response in reasoning for debugging.
+
+```
+
+
 
 
 
