@@ -65,9 +65,9 @@ label was applied — title and description are both useful; other fields
 **Example block sketch (write one concrete example):**
 
 ```
-Title: {title}
-Description: {description}
-Label: {label}
+Title: Navigating Imposter Syndrome Post Grad Job Hunting
+Description: "Studies and personal surveys from post grads around the country shows that 4 in 5 entry level job seekers experience an overwhelming lack of self confidence that not only affect their job search but maintaing personal connections during college and w/ family. 
+Label: "narrative"
 ```
 
 ---
@@ -95,6 +95,14 @@ the format below:" followed by the output format you chose.
 makes parsing reliable? Think about: a single label on its own line?
 A structured format like "Label: X / Reasoning: Y"? JSON?
 What are the tradeoffs?]
+
+Label: X\nReasoning: Y (two separate lines, not slash-separated) hits the sweet spot. 
+
+Reasoning: The label is on a predictable key, parsing is split("\n") + strip, and the few-shot examples teach the format directly. JSON is too much for 4 fixed labels while the bare-label approach is too easy to break.
+
+
+
+
 ```
 
 ---
@@ -104,6 +112,11 @@ What are the tradeoffs?]
 ```
 [blank — what if labeled_examples is empty? What if the description is very
 short? How does your prompt handle these?]
+
+- If the labeled_examples is empty, return {"label": "unknown", "reasoning": "No labeled examples provided."}
+- If the description is short, classify based on what is available."
+
+
 ```
 
 ---
