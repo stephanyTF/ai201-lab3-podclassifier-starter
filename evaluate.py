@@ -58,7 +58,23 @@ def compute_accuracy(predictions: list[str], ground_truth: list[str]) -> float:
 
     Before writing code, complete specs/evaluation-spec.md.
     """
-    return 0.0
+
+    if len(ground_truth) != len(predictions):
+        raise ValueError("Length of predictions and ground truth must be the same.")    
+    elif not ground_truth:
+        return 0.0
+
+    total_accuracy = 0.0
+    total_correct = 0
+    for pred, truth in zip(predictions, ground_truth):
+        if pred == truth:
+            total_correct += 1
+    
+    total_accuracy = total_correct / len(ground_truth) if ground_truth else 0.0
+    
+
+    
+    return total_accuracy
 
 
 def compute_per_class_accuracy(
@@ -83,7 +99,22 @@ def compute_per_class_accuracy(
 
     Before writing code, complete specs/evaluation-spec.md.
     """
-    return {label: {"correct": 0, "total": 0, "accuracy": 0.0} for label in VALID_LABELS}
+    # 1. Initialize the dict with zero counts for each label
+    label_stats = {label: {"correct": 0, "total": 0, "accuracy": 0.0} for label in VALID_LABELS}
+
+    # 2. Populate the counts
+    for pred, truth in zip(predictions, ground_truth):
+        if truth in label_stats:
+            label_stats[truth]["total"] += 1
+            if pred == truth:
+                label_stats[truth]["correct"] += 1
+
+    # 3. Compute accuracies
+    for label in label_stats:
+        if label_stats[label]["total"] > 0:
+            label_stats[label]["accuracy"] = label_stats[label]["correct"] / label_stats[label]["total"]
+
+    return label_stats
 
 
 def format_evaluation_report(eval_results: dict) -> str:
