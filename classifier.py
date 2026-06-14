@@ -59,7 +59,7 @@ def build_few_shot_prompt(labeled_examples: list[dict], description: str) -> str
     prompt_task = (
         """You are classifying podcast episodes based on the given podcast episode description. \n
         You should assign one of four labels: `interview`, `solo`, `panel`, or `narrative`.\n\n
-        The output should match this specific format:\n
+        The output should match this specific format with label on top and reasoning on the next line:\n
         Label: <one of: interview, solo, panel, narrative>\n
         Reasoning: <one or two sentences>\n"""
     )
@@ -126,7 +126,7 @@ def classify_episode(description: str, labeled_examples: list[dict]) -> dict:
         # 3.Parse the response to extract a label and reasoning
         response_text = llm_response.choices[0].message.content.strip()
     
-        reasoning = response_text.text.strip()
+        reasoning = response_text.strip()
         for line in response_text.splitlines():
 
             cleaned = line.strip().lower().lstrip("*-` ").rstrip("*` .,:")
