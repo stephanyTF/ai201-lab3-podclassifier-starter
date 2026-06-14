@@ -44,8 +44,9 @@ Returns the fraction of predictions that exactly match the ground truth.
 **Formula:**
 
 ```
-[blank — write out the accuracy formula in plain English.
- What counts as "correct"? What do you divide by?]
+
+ The formula would be the total correct number of predictions that match the ground truth divided by the total predictions made. 
+
 ```
 
 ---
@@ -53,10 +54,10 @@ Returns the fraction of predictions that exactly match the ground truth.
 **Step-by-step logic:**
 
 ```
-[blank — describe the steps your code will take.
- 1. ...
- 2. ...
- 3. ...]
+ 1. Determine if the prediction is correct by matching it w/ the ground truth
+ 2. Sum the total number of correct predictions
+ 3. Divide the sum by the total number of predictions 
+ 4. Return the quotient
 ```
 
 ---
@@ -64,7 +65,7 @@ Returns the fraction of predictions that exactly match the ground truth.
 **Edge case — what if both lists are empty?**
 
 ```
-[blank — what should the function return? Why?]
+If both lists are empty, the accuracy should be 0 since there's nothing to compare it to.
 ```
 
 ---
@@ -75,7 +76,11 @@ Returns the fraction of predictions that exactly match the ground truth.
 predictions  = ["interview", "solo", "panel", "interview"]
 ground_truth = ["interview", "solo", "solo",  "narrative"]
 
-[blank — what does compute_accuracy() return for these inputs? Show your work.]
+
+1. Sum of correct predictions: 3
+2. Divide total correct by total predictions: 3/4
+3. Answer: 75%
+
 ```
 
 ---
@@ -115,6 +120,8 @@ A `dict` keyed by label. Each value is a dict with three keys:
 ```
 [blank — be precise. When does an episode count as correctly classified
  for the "interview" class, for example?]
+
+ 
 ```
 
 ---
