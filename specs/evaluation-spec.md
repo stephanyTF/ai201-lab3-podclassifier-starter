@@ -118,10 +118,8 @@ A `dict` keyed by label. Each value is a dict with three keys:
 **What does "correct" mean for a given class?**
 
 ```
-[blank — be precise. When does an episode count as correctly classified
- for the "interview" class, for example?]
+If the episode label from the predictions list matches the value in the corresponding position in the ground_truth list.
 
- 
 ```
 
 ---
@@ -129,7 +127,8 @@ A `dict` keyed by label. Each value is a dict with three keys:
 **What does "total" mean for a given class?**
 
 ```
-[blank — is "total" the total number of predictions, or something more specific?]
+The total is the amount of predictions for that specific label.
+
 ```
 
 ---
@@ -137,12 +136,11 @@ A `dict` keyed by label. Each value is a dict with three keys:
 **Step-by-step logic:**
 
 ```
-[blank — describe the steps your code will take.
- 1. Initialize ...
- 2. Loop over ...
- 3. For each pair (predicted, truth) ...
- 4. After the loop ...
- 5. Return ...]
+ 1. Initialize the dictionary with four label keys each with a dictionary value holding 3 keys (amount of correct predictions, total predictions, and accuracy)
+ 2. Loop over the prediction list
+ 3. For each pair (predicted, truth) see if they match and if so, increment the correct key value of the dictionary
+ 4. After the loop update the remaining keys of the dictionary (total and the accuracy (based on the accuracy formula))
+ 5. Return the dictionary
 ```
 
 ---
@@ -150,8 +148,8 @@ A `dict` keyed by label. Each value is a dict with three keys:
 **Edge case — what if a class has no examples in ground_truth (total == 0)?**
 
 ```
-[blank — what should accuracy be set to? Why?
- Hint: look at the docstring in evaluate.py.]
+0.0
+
 ```
 
 ---
@@ -178,10 +176,22 @@ narrative   [blank]  [blank]  [blank]
 
 1. Your overall accuracy might be decent even if one class has very low accuracy.
    Why is per-class accuracy a more informative metric than overall accuracy alone?
+   ```
+      Per-class accuracy can tell us if the llm is performing better with certain type of labels than others and helps us focus on what specifically to improve one. 
+   ```
 
 2. If `panel` episodes consistently get misclassified as `interview`, what does
    that tell you about your training labels or your prompt?
+   ```
+   I may have more training labels of `interview` than `panel` since the llm model may have had more exposure and recognition of interviews, leading it to recognize more interview podcasts than panels.
+   ```
 
 3. You labeled 20 training episodes and evaluated on 20 test episodes (5 per class).
    How might the evaluation results change if you had labeled 100 training episodes?
    What if you had 200 test episodes?
+   ```
+   More training episodes may increase the accuracy of our evaluation results since the LLM model would have seen more instances of each label classications, leading to better predictions. 
+
+   If I had 200 test episodes, for just 100, the accuracy may decrease slightly since there's a higher chance having different variances of podcasts that the llm model may not have seen based on its training data.
+   
+   ```
