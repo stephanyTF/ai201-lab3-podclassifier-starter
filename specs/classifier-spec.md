@@ -231,24 +231,26 @@ any labels you're unsure about. Annotation quality is part of the lab.
 **Test: what does the raw LLM response look like for one episode?**
 
 ```
-Episode tested: [title]
-Raw response text: [paste it here]
+Episode tested: The Case for Four-Day Workweeks
+Raw response text: Label: solo Reasoning: The episode description indicates that the speaker will be presenting their personal view on the topic of the four-day workweek, covering various aspects and objections, which suggests a solo speech or monologue without any interviews or discussions with others
 ```
 
 **How did you parse the label out of the response?**
 
 ```
-[describe the string operations — strip, split, lower, etc.]
+
+I parsed the label out of the response by searching for "label: " from the cleaned line and checking if the extracted label matches the valid labels.
+
 ```
 
 **Did any episodes return `"unknown"`? If so, why?**
 
 ```
-[yes / no — if yes, what did the raw response look like?]
+None. The only time was when I put in the description, "unknown" and the output said it didn't recognize the label.
 ```
 
 **One thing about the output format that surprised you:**
 
 ```
-[your answer here]
+Not much except for formatting, eventhough I explicity told in the prompt to separate the label and reasoning on two lines, the output still had them non separated. 
 ```
