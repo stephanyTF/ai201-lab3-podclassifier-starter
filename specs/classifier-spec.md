@@ -184,25 +184,22 @@ When it comes to error handling, if I can't find both parts (label and reasoning
 **Step 4 — Validate the label:**
 
 ```
-[blank — what do you do if the LLM returns a label that isn't in VALID_LABELS?
-What should label be set to?]
+After parsing, check if label is in VALID_LABELS. If not, set label = "unknown".
+
 ```
 
-After parsing, check if label is in VALID_LABELS. If not, set label = "unknown".
 
 ---
 
 **Step 5 — Handle errors gracefully:**
 
 ```
-[blank — what could go wrong? (Network error? Unparseable response?)
-What should the function return if something fails?
-Hint: the evaluation loop runs 20 calls — one bad response shouldn't crash everything.]
-```
-
 Using a try/except block, we can handle both API exceptions and parsing errors (e.g., IndexError, AttributeError). 
 
 On any failure, return {"label": "unknown", "reasoning": "Classification failed: <error message>"}. This keeps the evaluation loop running even if individual calls fail.
+```
+
+
 
 ---
 
